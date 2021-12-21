@@ -1,19 +1,3 @@
-Given a string s, return the longest palindromic substring in s.
-
- 
-
-Example 1:
-
-Input: s = "babad"
-Output: "bab"
-Explanation: "aba" is also a valid answer.
-
-Example 2:
-
-Input: s = "cbbd"
-Output: "bb"
-
-// code is here
 var longestPalindrome = function (s) {
     // Update the string to put hash "#" at the beginning, end and in between each character
     let updatedString = getUpdatedString(s);
