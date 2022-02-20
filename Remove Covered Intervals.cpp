@@ -1,20 +1,30 @@
+//time: O(NlogN), space: O(1)
 class Solution {
 public:
-    bool isCovered(int a, int b, int c, int d){
-        //check whether [a,b) is covered by [c,d)
-        return c <= a && b <= d;
-    };
-    
     int removeCoveredIntervals(vector<vector<int>>& intervals) {
-        int covered = 0;
-        int N = intervals.size();
+        //sort left ascending, right descending
+        sort(intervals.begin(), intervals.end(),
+            [](const vector<int>& a, const vector<int>& b){
+                return (a[0] == b[0]) ? a[1] > b[1] : a[0] < b[0];
+                });
         
-        for(int i = 0; i < N; i++){
-            for(int j = 0; j < N; j++){
-                if(i != j && isCovered(intervals[i][0], intervals[i][1], intervals[j][0], intervals[j][1])) covered++;
+        int res = 0, right = -1;
+        
+        for(const vector<int>& v : intervals){
+            if(v[1] > right){
+                //in this case v[1] > right and v[0] > left
+                ++res;
+                right = v[1];
             }
+            /*
+            ignore these cases:
+            1. v[0]==left && v[1]<=right:
+            these intervals are covered by last interval
+            2. v[0]>left && v[1]<=right:
+            these intervals are covered by last interval
+            */
         }
-
-        return N-covered;
+        
+        return res;
     }
 };
